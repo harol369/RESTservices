@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import render
 import numpy as np
+from .models import Autores
 
 # Create your views here.
 @api_view(['GET'])
@@ -56,3 +57,35 @@ def predict_diabetictype(request):
         }
     
     return Response(predictions)
+
+@api_view(['GET'])
+def mostrarAutores(request):
+    id = request.data.get("id_autor")
+    #autor = Autores.objects.get(id_autor = id)
+    autores = Autores.objects.all()
+    # id_a =autores[0].id_autor
+    # nombre=autores[0].nombres
+    # apellidos=autores[0].apellidos
+
+    return_data = {}
+
+    for autor in autores:
+        aut ={'id': autor.id_autor, 'apellidos': autor.apellidos, 'nombres': autor.nombres}
+        clave = 'autor' + str(autor.id_autor)
+        return_data[clave] = aut
+
+        # 'id' : id_a,
+        # 'nombres' : nombre,
+        # 'apellidos' : apellidos,
+    
+    return Response(return_data)
+
+
+@api_view(['POST'])
+def mostrarAut(request):
+    id = int(request.data.get("id_autor"))
+    autores = Autores.objects.all()
+
+    return_data = {'id': autores[id - 1].id_autor, 'nombres': autores[id - 1].nombres,'apellidos': autores[id - 1].apellidos}
+
+    return Response(return_data)

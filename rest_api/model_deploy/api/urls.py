@@ -4,5 +4,7 @@ from api import views
 urlpatterns = [
     path('', views.index_page),
     path('predict', views.predict_diabetictype),
+    path('autores', views.MostrarAutor),
+    path('BuscarA', views.BuscarAutor)
 ]
 

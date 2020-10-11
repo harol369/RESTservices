@@ -2,8 +2,11 @@
 import pickle
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+#from rest_framework import request
 from django.shortcuts import render
 import numpy as np
+from .models import Autores, Libros
+from django.shortcuts import get_list_or_404, get_object_or_404
 
 # Create your views here.
 @api_view(['GET'])
@@ -56,3 +59,49 @@ def predict_diabetictype(request):
         }
     
     return Response(predictions)
+
+#SERVICIO DE AUTORES
+
+@api_view(["GET"])
+def MostrarAutor(request):
+    return_data={}
+    try:
+        id_a = request.data.get("id_autor")
+        autores = Autores.objects.all()
+        # id_a = autores[0].id_autor
+        # nombre = autores[0].nombres
+        # apellidos = autores[0].apellidos
+        # return_data = {
+        #     "id_autor" : id_a,
+        #     "nombres": nombre,
+        #     "apellidos" : apellidos,
+        #     "message" : "Bien papito",
+        # }
+        #LISTAR
+        for autor in autores:
+            aut = {'id': autor.id_autor, 'nombres':autor.nombres, 'apellidos': autor.apellidos}
+            clave = 'autor ' + str(autor.id_autor)
+            return_data[clave] = aut
+
+        
+    except Exception as e:
+        return_data = {
+            'error' : '2',
+            "message": str(e)
+        } 
+    return Response(return_data) 
+
+@api_view(["POST"])
+def BuscarAutor(request):
+    try:
+        id = int(request.data.get("id_autor"))
+        autores = Autores.objects.all()
+
+        return_data = {'id_autor':autores[id - 1].id_autor, 'sadsa': autores[id - 1].nombres, 'apellidos': autores[id - 1].apellidos}
+
+    except Exception as e:
+        return_data = {
+            'error' : '2',
+            "message": str(e)
+        } 
+    return Response(return_data) 

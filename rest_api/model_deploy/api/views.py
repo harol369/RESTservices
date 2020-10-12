@@ -4,7 +4,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import render
 import numpy as np
-from .models import Autores
+from .models import Autores,Clientes,Categorias,PedidoCliente,LibroPorAutor,Libros
+import json
+from .Serializers import CategoriaSerializer
 
 # Create your views here.
 @api_view(['GET'])
@@ -89,3 +91,106 @@ def mostrarAut(request):
     return_data = {'id': autores[id - 1].id_autor, 'nombres': autores[id - 1].nombres,'apellidos': autores[id - 1].apellidos}
 
     return Response(return_data)
+
+
+# SERVICIOS DE CATEGORÍAS
+# Eliminar Pedido Cliente método GET
+@api_view(['GET'])
+def eliminaPedidoCliente(request):
+    pedido = int(request.data.get('id_pedido'))
+    isbn = int(request.data.get('isbn'))
+    
+    try:
+        id_p = PedidoCliente.objects.get(id_pedido = pedido)
+        id_l = PedidoCliente.objects.get(isbn = isbn)
+
+        PedidoCliente.delete(id_p)
+        PedidoCliente.delete(id_l)
+
+        elimina = {'id pedido': pedido,
+                    'id libro': isbn,
+                'eliminado': '200 Ok',
+                'error': 0
+        }
+    except Exception as e:
+        error = str(e)
+        elimina = {'id pedido': pedido,
+                    'id libro': isbn,
+                   'eliminado': False,
+                   'error': error}
+        
+    return Response(elimina)
+
+
+
+
+# Insertar Categorías método GET
+@api_view(['POST'])
+def insertarAutores(request):
+    nom = request.data.get('nombres')
+    ape = request.data.get('apellidos')
+    
+    try:
+        autores= Autores()
+        autores.nombres = nom
+        autores.apellidos=ape
+        autores.save()
+        insertar = {'nombres': nom,
+                    'apellidos':ape,
+                    'insertado': '200 Ok',
+                    'error': 0}
+    except Exception as e:
+        error = 'No se ha podido insertar el registro.  ' + str(e)
+        insertar = {'categoria': None,
+                    'insertado': False,
+                    'error': error}
+    
+    return Response(insertar)
+
+
+# Insertar Categorias método POST
+@api_view(['POST'])
+def insertarCategoriaPOST(request):
+    cat = request.data.get('categoria')
+    
+    try:
+        categoria = Categorias()
+        categoria.categoria = cat
+        categoria.save()
+        insertar = {'categoria': cat,
+                    'insertado': '200 Ok',
+                    'error': 0}
+    except Exception as e:
+        error = 'No se ha podido insertar el registro.  ' + str(e)
+        insertar = {'categoria': cat,
+                    'insertado': False,
+                    'error': error}
+    
+    return Response(insertar)
+
+
+# Actualizar Categorias método GET
+@api_view(['GET'])
+def actualizarCategoria(request):
+    a = request.data.get('id_categoria')
+    task = Categorias.objects.get(id_categoria=a)
+    serializer = CategoriaSerializer(task, data=request.data)
+
+    if serializer.is_valid():
+       serializer.save()
+    return Response(serializer.data)
+    
+    # try:
+    #     categoria = Categorias()
+    #     categoria.categoria = cat
+    #     categoria.save()
+    #     insertar = {'categoria': json_categoria.categoria,
+    #                 'insertado': '200 Ok',
+    #                 'error': 0}
+    # except Exception as e:
+    #     error = 'No se ha podido insertar el registro.  ' + str(e)
+    #     actualizar = {'categoria': cat,
+    #                 'insertado': False,
+    #                 'error': error}
+    
+    return Response(actualizar)

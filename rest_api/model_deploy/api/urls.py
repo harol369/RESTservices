@@ -5,6 +5,9 @@ urlpatterns = [
     path('', views.index_page),
     path('predict', views.predict_diabetictype),
     path('mostrarA', views.mostrarAutores),
-    path('mostrarA_P', views.mostrarAut)
+    path('mostrarA_P', views.mostrarAut),
+    path('eliminaPcliente', views.eliminaPedidoCliente),
+    path('insertarAutores', views.insertarAutores),
+    path('actualizarCategoria', views.actualizarCategoria) 
 ]
 

@@ -83,13 +83,6 @@ class Autores(models.Model):
         managed = False
         db_table = 'autores'
 
-    
-    def __str__(self):
-        datos=[self.id_autor
-        ,self.nombres
-        ,self.apellidos]
-        return str(datos)
-
 
 class Categorias(models.Model):
     id_categoria = models.AutoField(primary_key=True)
@@ -98,12 +91,6 @@ class Categorias(models.Model):
     class Meta:
         managed = False
         db_table = 'categorias'
-
-    def __str__(self):
-        datos=[self.id_categoria
-        ,self.categoria]
-        return str(datos)
-
 
 
 class Clientes(models.Model):
@@ -119,18 +106,6 @@ class Clientes(models.Model):
         managed = False
         db_table = 'clientes'
 
-    def __str__(self):
-        datosCliente=[self.id_cliente
-        ,self.identificacion
-        ,self.nombres 
-        ,self.apellidos
-        ,self.telefono 
-        ,self.direccion 
-        ,self.correo_electronico ]
-        return str(datosCliente)
-
-
-
 
 class DjangoAdminLog(models.Model):
     action_time = models.DateTimeField()
@@ -144,8 +119,6 @@ class DjangoAdminLog(models.Model):
     class Meta:
         managed = False
         db_table = 'django_admin_log'
-    
-    
 
 
 class DjangoContentType(models.Model):
@@ -186,12 +159,7 @@ class LibroPorAutor(models.Model):
         managed = False
         db_table = 'libro_por_autor'
         unique_together = (('id_autor', 'isbn'),)
- 
-    
-    def __str__(self):
-        datos=[self.id_autor
-        ,self.isbn]
-        return str(datos)
+
 
 class Libros(models.Model):
     isbn = models.IntegerField(primary_key=True)
@@ -205,14 +173,6 @@ class Libros(models.Model):
     class Meta:
         managed = False
         db_table = 'libros'
-    
-    
-    def __str__(self):
-        datos=[self.isbn
-        ,self.titulo,
-        self.fecha_pub,self.categoria,self.precio,self.portada,self.cantidad_stock]
-
-        return str(datos)
 
 
 class PedidoCliente(models.Model):
@@ -228,9 +188,3 @@ class PedidoCliente(models.Model):
         managed = False
         db_table = 'pedido_cliente'
         unique_together = (('id_pedido', 'isbn'),)
-    
-    
-    def __str__(self):
-        datos=[self.id_pedido
-        ,self.nro_pedido,self.id_cliente,self.isbn,self.fecha_pedido,self.cantidad,self.subtotal]
-        return str(datos)

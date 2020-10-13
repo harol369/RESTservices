@@ -92,9 +92,9 @@ WSGI_APPLICATION = 'model_deploy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'libreriaMILG',
+        'NAME': 'libreriaLCDV',
         'USER':'postgres',
-        'PASSWORD':'250719',
+        'PASSWORD':'1234',
         'HOST':'localhost',
         'PORT':'5432',
     }

@@ -17,8 +17,8 @@ export class PruebaComponent implements OnInit {
     this.getCategoria();
   }
 
-  prueba()
-  {alert("nuevo nombre de la categoria:" + this.nuevaCategoria.categoria)}
+  // prueba()
+  // {alert("nuevo nombre de la categoria:" + this.nuevaCategoria.categoria)}
 
   getCategoria(){
     this.servicioCategoria.getCategorias().subscribe(

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form action="">
+        <div class="container">
+            <div class="row">
+                <legend>Formulario de Prueba</legend>
+            </div>
+            <div class="form-group">
+                <label for="">categoria</label>
+                <input type="text" class="form-group" name="cat" [(ngModel)]="nuevaCategoria.categoria">
+
+                <button type="submit" class="btn btn-primary" (click)="prueba()">Mostrar</button>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id categoria</th>
+                        <th scope="col">nombre</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let listado of listadoCategoria | keyvalue ">
+                        <td>{{ listado.value.id}}</td>
+                        <td>{{listado.value.nombre}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </form>
+</body>
+
+</html>
+<router-outlet>
+</router-outlet>

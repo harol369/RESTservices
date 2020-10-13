@@ -82,6 +82,27 @@ def mostrarAutores(request):
     
     return Response(return_data)
 
+@api_view(['GET'])
+def mostrarCategorias(request):
+    id = request.data.get("id_autor")
+    #autor = Autores.objects.get(id_autor = id)
+    categorias = Categorias.objects.all()
+    # id_a =autores[0].id_autor
+    # nombre=autores[0].nombres
+    # apellidos=autores[0].apellidos
+
+    return_data = {}
+
+    for categoria in categorias:
+        cat ={'id': categoria.id_categoria, 'nombre': categoria.categoria}
+        clave = 'categoria' + str(categoria.id_categoria)
+        return_data[clave] =  cat
+
+        # 'id' : id_a,
+        # 'nombres' : nombre,
+        # 'apellidos' : apellidos,
+    
+    return Response(return_data)
 
 @api_view(['POST'])
 def mostrarAut(request):

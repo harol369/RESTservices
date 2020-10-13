@@ -8,6 +8,7 @@ urlpatterns = [
     path('mostrarA_P', views.mostrarAut),
     path('eliminaPcliente', views.eliminaPedidoCliente),
     path('insertarAutores', views.insertarAutores),
-    path('actualizarCategoria', views.actualizarCategoria) 
+    path('actualizarCategoria', views.actualizarCategoria),
+    path('mostrarCategorias',views.mostrarCategorias) 
 ]
 

@@ -27,4 +27,6 @@ export class PruebaComponent implements OnInit {
       
     );
   }
+
+  unsorted() { }
 }
